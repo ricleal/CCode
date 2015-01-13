@@ -10,11 +10,12 @@
 #include <omp.h>
 #include <stdio.h>
 #include <stdlib.h>
+
 #define VECLEN 100
 
 float a[VECLEN], b[VECLEN], sum;
 
-float dotprod() {
+void dotprod() {
 	int i, tid;
 
 	tid = omp_get_thread_num();
@@ -28,6 +29,7 @@ float dotprod() {
 void omp_orphan() {
 	int i;
 
+	// Some initializations
 	for (i = 0; i < VECLEN; i++)
 		a[i] = b[i] = 1.0 * i;
 	sum = 0.0;

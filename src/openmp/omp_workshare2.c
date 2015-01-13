@@ -23,7 +23,7 @@ void omp_workshare2() {
 		c[i] = d[i] = 0.0;
 	}
 
-#pragma omp parallel shared(a,b,c,d,nthreads) private(i,tid)
+	#pragma omp parallel shared(a,b,c,d,nthreads) private(i,tid)
 	{
 		tid = omp_get_thread_num();
 		if (tid == 0) {
@@ -32,9 +32,13 @@ void omp_workshare2() {
 		}
 		printf("Thread %d starting...\n", tid);
 
-#pragma omp sections nowait
+		// different threads in different sections
+		// 'nowait' tells the compiler that threads do not need to wait to exit the section.
+		#pragma omp sections nowait
+		//
+		//#pragma omp parallel sections
 		{
-#pragma omp section
+			#pragma omp section
 			{
 				printf("Thread %d doing section 1\n", tid);
 				for (i = 0; i < N; i++) {
@@ -43,7 +47,7 @@ void omp_workshare2() {
 				}
 			}
 
-#pragma omp section
+			#pragma omp section
 			{
 				printf("Thread %d doing section 2\n", tid);
 				for (i = 0; i < N; i++) {
