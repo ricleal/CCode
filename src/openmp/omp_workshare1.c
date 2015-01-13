@@ -11,6 +11,7 @@
 #include <omp.h>
 #include <stdio.h>
 #include <stdlib.h>
+
 #define CHUNKSIZE   10
 #define N       100
 
