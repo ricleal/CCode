@@ -13,21 +13,25 @@
 #include <omp.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
+
+#define PI 3.14159265
+#define N       1000000000
 
 void omp_reduction() {
-	int i, n;
-	float a[100], b[100], sum;
+	int i;
+	float a[N], b[N], sum;
 
 	/* Some initializations */
-	n = 100;
-	for (i = 0; i < n; i++)
+
+	for (i = 0; i < N; i++)
 		a[i] = b[i] = i * 1.0;
 	sum = 0.0;
 
 	#pragma omp parallel for reduction(+:sum)
-	for (i = 0; i < n; i++)
-		sum = sum + (a[i] * b[i]);
-
+	for (i = 0; i < N; i++){
+		sum += sin(a[i]*PI/180) + sin(b[i]*PI/180);
+	}
 	printf("   Sum = %f\n", sum);
 
 }
